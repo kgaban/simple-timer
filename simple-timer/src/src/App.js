@@ -12,6 +12,13 @@ const COLORS = {
   light: '#DEE4E7',
 };
 
+const isEmpty = (val) => {
+  if (val === '' || val === 0) {
+    return true;
+  }
+  return false;
+};
+
 const useStyles = makeStyles(() => ({
   frame: {
     padding: '1rem',
@@ -37,9 +44,9 @@ function App() {
   const [paused, setPaused] = useState(true);
 
   const timerInSeconds = useMemo(() => {
-    let total = seconds;
-    total += hours * 60 * 60;
-    total += minutes * 60;
+    let total = isEmpty(seconds) ? 0 : seconds;
+    total += isEmpty(hours) ? 0 : hours * 60 * 60;
+    total += isEmpty(minutes) ? 0 : minutes * 60;
     return total;
   }, [hours, minutes, seconds]);
 
@@ -78,27 +85,18 @@ function App() {
   };
 
   const handleChangeHours = (event) => {
-    if (event.target.value < 0 || event.target.value === '') {
-      setHours(0);
-    } else {
-      setHours(+event.target.value);
-    }
+    const updated = event.target.value === '' ? '' : +event.target.value;
+    setHours(updated < 0 ? 0 : updated);
   };
 
   const handleChangeMinutes = (event) => {
-    if (event.target.value < 0 || event.target.value === '') {
-      setMinutes(0);
-    } else {
-      setMinutes(+event.target.value);
-    }
+    const updated = event.target.value === '' ? '' : +event.target.value;
+    setMinutes(updated < 0 ? 0 : updated);
   };
 
   const handleChangeSeconds = (event) => {
-    if (event.target.value < 0 || event.target.value === '') {
-      setSeconds(0);
-    } else {
-      setSeconds(+event.target.value);
-    }
+    const updated = event.target.value === '' ? '' : +event.target.value;
+    setSeconds(updated < 0 ? 0 : updated);
   };
 
   const controlButton = () => (
@@ -106,7 +104,7 @@ function App() {
       fullWidth
       variant='contained'
       onClick={() => setPaused(!paused)}
-      disabled={(mode === 'timer' && hours === 0 && minutes === 0 && seconds === 0)}
+      disabled={(mode === 'timer' && isEmpty(hours) && isEmpty(minutes) && isEmpty(seconds))}
     >
       {paused ? 'Start' : 'Pause'}
     </Button>
@@ -175,6 +173,7 @@ function App() {
                     onChange={handleChangeHours}
                     InputProps={{ type: 'number' }}
                     style={{ paddingRight: '0.5rem' }}
+                    disabled={!paused}
                   />
                   <TextField
                     id='minutes-field'
@@ -184,6 +183,7 @@ function App() {
                     onChange={handleChangeMinutes}
                     InputProps={{ type: 'number' }}
                     style={{ paddingRight: '0.5rem' }}
+                    disabled={!paused}
                   />
                   <TextField
                     id='seconds-field'
@@ -192,6 +192,7 @@ function App() {
                     value={seconds}
                     onChange={handleChangeSeconds}
                     InputProps={{ type: 'number' }}
+                    disabled={!paused}
                   />
                 </Grid>
               )}
