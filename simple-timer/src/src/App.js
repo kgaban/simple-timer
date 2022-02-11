@@ -141,7 +141,7 @@ function App() {
         <Grid item xs={12} align='center'>
           <Paper style={{ background: 'white' }}>
             <Grid container className={classes.frame} alignItems='center' justifyContent='center' spacing={1}>
-              <Grid item xs={1}>
+              <Grid item xs={3} xl={1}>
                 <FormControl size='small' fullWidth>
                   <InputLabel id='mode-select'>Mode</InputLabel>
                   <Select
@@ -155,46 +155,51 @@ function App() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={3} xl={1}>
                 {controlButton()}
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={3} xl={1}>
                 <Button fullWidth variant='contained' onClick={handleReset}>
                   Reset
                 </Button>
               </Grid>
+              <Grid item xs={12} />
               {mode === 'timer' && (
-                <Grid item xs={12}>
-                  <TextField
-                    id='hours-field'
-                    label='Hours'
-                    variant='standard'
-                    value={hours}
-                    onChange={handleChangeHours}
-                    InputProps={{ type: 'number' }}
-                    style={{ paddingRight: '0.5rem' }}
-                    disabled={!paused}
-                  />
-                  <TextField
-                    id='minutes-field'
-                    label='Minutes'
-                    variant='standard'
-                    value={minutes}
-                    onChange={handleChangeMinutes}
-                    InputProps={{ type: 'number' }}
-                    style={{ paddingRight: '0.5rem' }}
-                    disabled={!paused}
-                  />
-                  <TextField
-                    id='seconds-field'
-                    label='Seconds'
-                    variant='standard'
-                    value={seconds}
-                    onChange={handleChangeSeconds}
-                    InputProps={{ type: 'number' }}
-                    disabled={!paused}
-                  />
-                </Grid>
+                <>
+                  <Grid item xs={4} xl={1}>
+                    <TextField
+                      id='hours-field'
+                      label='Hours'
+                      variant='standard'
+                      value={hours}
+                      onChange={handleChangeHours}
+                      InputProps={{ type: 'number' }}
+                      disabled={!paused}
+                    />
+                  </Grid>
+                  <Grid item xs={4} xl={1}>
+                    <TextField
+                      id='minutes-field'
+                      label='Minutes'
+                      variant='standard'
+                      value={minutes}
+                      onChange={handleChangeMinutes}
+                      InputProps={{ type: 'number' }}
+                      disabled={!paused}
+                    />
+                  </Grid>
+                  <Grid item xs={4} xl={1}>
+                    <TextField
+                      id='seconds-field'
+                      label='Seconds'
+                      variant='standard'
+                      value={seconds}
+                      onChange={handleChangeSeconds}
+                      InputProps={{ type: 'number' }}
+                      disabled={!paused}
+                    />
+                  </Grid>
+                </>
               )}
               <Grid item xs={12}>
                 <Typography variant='h2' style={{ color: paused ? 'grey' : 'black' }}>
